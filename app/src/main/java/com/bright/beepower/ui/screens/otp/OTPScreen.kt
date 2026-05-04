@@ -21,7 +21,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
+
 fun OTPScreen(
     navController: NavController
 ) {
@@ -66,6 +68,7 @@ fun OTPScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            val phone = ""
             Text(
                 text = "Code sent to $phone",
                 color = Color.DarkGray
