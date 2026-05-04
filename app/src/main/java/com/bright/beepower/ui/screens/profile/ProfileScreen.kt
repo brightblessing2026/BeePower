@@ -1,4 +1,4 @@
-package com.bright.beepower.ui.screens.onboarding
+package com.bright.beepower.ui.screens.profile
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun OnBoardingScreen(navController: NavController){
+fun ProfileScreen(navController: NavController){
 
     Column(
 
@@ -81,9 +81,9 @@ fun OnBoardingScreen(navController: NavController){
 
 @Preview(showBackground = true)
 @Composable
-fun OnBoardingScreenPreview(){
+fun ProfileScreenPreview(){
 
-    OnBoardingScreen(rememberNavController())
+    ProfileScreen(rememberNavController())
 
 
 }

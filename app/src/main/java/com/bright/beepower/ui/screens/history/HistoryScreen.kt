@@ -1,4 +1,4 @@
-package com.bright.beepower.ui.screens.onboarding
+package com.bright.beepower.ui.screens.history
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun OnBoardingScreen(navController: NavController){
+fun HistoryScreen(navController: NavController){
 
     Column(
 
@@ -18,6 +18,19 @@ fun OnBoardingScreen(navController: NavController){
 
 
     ) {
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -81,9 +94,9 @@ fun OnBoardingScreen(navController: NavController){
 
 @Preview(showBackground = true)
 @Composable
-fun OnBoardingScreenPreview(){
+fun HistoryScreenPreview(){
 
-    OnBoardingScreen(rememberNavController())
+    HistoryScreen(rememberNavController())
 
 
 }
