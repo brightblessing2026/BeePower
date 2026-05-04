@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.daniel.markethub"
+    namespace = "com.bright.beepower"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.daniel.markethub"
+        applicationId = "com.bright.beepower"
         minSdk = 23
         targetSdk = 36
         versionCode = 1
@@ -73,6 +73,12 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
     implementation("com.cloudinary:cloudinary-android:2.3.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+
+    dependencies {
+        // ... other lines
+        implementation("androidx.compose.material:material-icons-extended:1.6.7")
+    }
 }
 
 

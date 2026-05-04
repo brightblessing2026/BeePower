@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.bright.beepower.ui.screens.notification.NotificationScreen
+
 import com.bright.beepower.ui.theme.BeeYellow
 import com.bright.beepower.ui.theme.BeeBlack
 

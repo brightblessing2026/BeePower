@@ -6,11 +6,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.bright.beepower.ui.screens.BuyTokenScreen
+import com.bright.beepower.ui.screens.HistoryScreen
+import com.bright.beepower.ui.screens.NotificationScreen
 import com.bright.beepower.ui.screens.auth.LoginScreen
-import com.bright.beepower.ui.screens.buytoken.BuyTokenScreen
+
 import com.bright.beepower.ui.screens.dashboard.DashBoardScreen
-import com.bright.beepower.ui.screens.history.HistoryScreen
-import com.bright.beepower.ui.screens.notification.NotificationScreen
+
 import com.bright.beepower.ui.screens.onboarding.OnBoardingScreen
 import com.bright.beepower.ui.screens.otp.OTPScreen
 import com.bright.beepower.ui.screens.profile.ProfileScreen
