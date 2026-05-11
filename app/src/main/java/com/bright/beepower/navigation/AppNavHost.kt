@@ -6,24 +6,38 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.bright.beepower.ui.screens.BuyTokenScreen
 import com.bright.beepower.ui.screens.HistoryScreen
 import com.bright.beepower.ui.screens.NotificationScreen
+
 import com.bright.beepower.ui.screens.auth.LoginScreen
+import com.bright.beepower.ui.screens.auth.RegisterScreen
+
+import com.bright.beepower.ui.screens.buytoken.BuyTokenScreen
 
 import com.bright.beepower.ui.screens.dashboard.DashBoardScreen
 
-import com.bright.beepower.ui.screens.onboarding.OnBoardingScreen
-import com.bright.beepower.ui.screens.otp.OTPScreen
-import com.bright.beepower.ui.screens.profile.ProfileScreen
-import com.bright.beepower.ui.screens.splash.SplashScreen
 
+
+import com.bright.beepower.ui.screens.onboarding.OnBoardingScreen
+
+import com.bright.beepower.ui.screens.profile.ProfileScreen
+
+import com.bright.beepower.ui.screens.report.ReportIssueScreen
+import com.bright.beepower.ui.screens.report.ViewReportScreen
+
+
+import com.bright.beepower.ui.screens.splash.SplashScreen
 
 @Composable
 fun AppNavHost(
+
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
+
+    navController: NavHostController =
+        rememberNavController(),
+
     startDestination: String = ROUT_SPLASH
+
 ) {
 
     NavHost(
@@ -31,57 +45,49 @@ fun AppNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
+
         composable(ROUT_SPLASH) {
             SplashScreen(navController)
         }
+
         composable(ROUT_ONBOARDING) {
             OnBoardingScreen(navController)
         }
+
         composable(ROUT_LOGIN) {
             LoginScreen(navController)
         }
-        composable(ROUT_BUYTOKEN) {
-            BuyTokenScreen(navController)
+
+        composable(ROUT_REGISTER) {
+            RegisterScreen(navController)
         }
+
         composable(ROUT_DASHBOARD) {
             DashBoardScreen(navController)
         }
+
+        composable(ROUT_BUYTOKEN) {
+            BuyTokenScreen(navController)
+        }
+
         composable(ROUT_HISTORY) {
             HistoryScreen(navController)
         }
+
         composable(ROUT_NOTIFICATION) {
             NotificationScreen(navController)
         }
-        composable(ROUT_OTP) {
-            OTPScreen(navController)
-        }
+
         composable(ROUT_PROFILE) {
             ProfileScreen(navController)
         }
 
+        composable(ROUT_REPORT_ISSUE) {
+            ReportIssueScreen(navController)
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        composable(ROUT_VIEW_REPORTS) {
+            ViewReportScreen(navController)
+        }
     }
 }
