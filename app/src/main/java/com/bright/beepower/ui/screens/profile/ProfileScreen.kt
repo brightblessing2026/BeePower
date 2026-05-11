@@ -15,7 +15,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bright.beepower.data.UserSession
-import com.bright.beepower.ui.screens.auth.RegisterScreen
+import com.bright.beepower.ui.screens.onboarding.OnBoardingScreen
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 @Composable
 fun ProfileScreen(navController: NavController) {
@@ -23,11 +25,40 @@ fun ProfileScreen(navController: NavController) {
     val beeGreen = Color(0xFF1B5E20)
     val beeYellow = Color(0xFFF4C430)
 
-    // Refresh when session changes
-    val username = UserSession.username ?: "Loading..."
-    val email = UserSession.email ?: "Loading..."
-    val meter = UserSession.meterNumber ?: "Loading..."
-    val balance = UserSession.balance
+    var username by remember { mutableStateOf("Loading...") }
+    var email by remember { mutableStateOf("Loading...") }
+    var meter by remember { mutableStateOf("Loading...") }
+    var balance by remember { mutableStateOf("Loading...") }
+
+    // 🔥 FETCH USER DATA FROM FIREBASE
+    LaunchedEffect(Unit) {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (uid != null) {
+
+            FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(uid)
+                .get()
+                .addOnSuccessListener { snapshot ->
+
+                    username = snapshot.child("username").value?.toString() ?: "N/A"
+                    email = snapshot.child("email").value?.toString() ?: "N/A"
+                    meter = snapshot.child("meterNumber").value?.toString() ?: "N/A"
+                    balance = snapshot.child("balance").value?.toString() ?: "0"
+
+                    // ✅ STORE IN SESSION (fix dashboard/profile skip issues)
+                    UserSession.username = username
+                    UserSession.email = email
+                    UserSession.meterNumber = meter
+                    balance = snapshot.child("balance")
+                        .getValue(Long::class.java)
+                        ?.toString()
+                        ?: "0"
+                }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -62,14 +93,30 @@ fun ProfileScreen(navController: NavController) {
                 Text("Balance: $balance")
             }
         }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // 🔴 LOGOUT BUTTON (ADDED ONLY FUNCTIONALITY)
+        Button(
+            onClick = {
+                FirebaseAuth.getInstance().signOut()
+                navController.navigate("login") {
+                    popUpTo(0)
+                }
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = beeGreen
+            )
+        ) {
+            Text("Logout", color = Color.White)
+        }
     }
 }
 @Preview(showBackground = true)
 @Composable
-fun ProfileScreenPreview() {
+fun ProfileScreenPreview(){
 
-    ProfileScreen(
-        rememberNavController()
-    )
+    ProfileScreen(rememberNavController())
+
+
 }
-

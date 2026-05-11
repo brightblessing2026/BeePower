@@ -20,9 +20,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.bright.beepower.data.AuthViewModel
-import com.bright.beepower.data.UserSession
-import com.bright.beepower.ui.screens.home.HomeScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(navController: NavController) {
 
@@ -32,56 +31,207 @@ fun RegisterScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
-    val context = LocalContext.current
-    val authViewModel = remember { AuthViewModel(navController, context) }
-
+    // 🎨 Colors
     val beeYellow = Color(0xFFF4C430)
     val lightGrey = Color(0xFFE0E0E0)
     val beeGreen = Color(0xFF1B5E20)
 
+    val context = LocalContext.current
+
+    val authViewModel = remember {
+        AuthViewModel(
+            navController,
+            context
+        )
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(beeYellow, lightGrey)))
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        beeYellow,
+                        lightGrey
+                    )
+                )
+            )
     ) {
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(24.dp),
+
             verticalArrangement = Arrangement.Center,
+
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text("Create Account", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = beeGreen)
+            Text(
+                text = "Create Account",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = beeGreen
+            )
 
-            Spacer(Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-            OutlinedTextField(username, { username = it }, label = { Text("Username") }, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(16.dp))
+            Text(
+                text = "Register to continue",
+                color = Color.Gray
+            )
 
-            OutlinedTextField(email, { email = it }, label = { Text("Email") }, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-            OutlinedTextField(meterNumber, { meterNumber = it }, label = { Text("Meter Number") }, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(16.dp))
+            OutlinedTextField(
+                value = username,
 
-            OutlinedTextField(password, { password = it }, label = { Text("Password") }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(16.dp))
+                onValueChange = {
+                    username = it
+                },
 
-            OutlinedTextField(confirmPassword, { confirmPassword = it }, label = { Text("Confirm Password") }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth())
+                label = {
+                    Text("Username")
+                },
 
-            Spacer(Modifier.height(32.dp))
+                modifier = Modifier.fillMaxWidth(),
+
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = email,
+
+                onValueChange = {
+                    email = it
+                },
+
+                label = {
+                    Text("Email")
+                },
+
+                modifier = Modifier.fillMaxWidth(),
+
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email
+                ),
+
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = meterNumber,
+
+                onValueChange = {
+                    meterNumber = it
+                },
+
+                label = {
+                    Text("Meter Number")
+                },
+
+                modifier = Modifier.fillMaxWidth(),
+
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number
+                ),
+
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = password,
+
+                onValueChange = {
+                    password = it
+                },
+
+                label = {
+                    Text("Password")
+                },
+
+                visualTransformation =
+                    PasswordVisualTransformation(),
+
+                modifier = Modifier.fillMaxWidth(),
+
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = confirmPassword,
+
+                onValueChange = {
+                    confirmPassword = it
+                },
+
+                label = {
+                    Text("Confirm Password")
+                },
+
+                visualTransformation =
+                    PasswordVisualTransformation(),
+
+                modifier = Modifier.fillMaxWidth(),
+
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
 
             Button(
+
                 onClick = {
-                    authViewModel.signup(username, email, meterNumber, password, confirmPassword)
+
+                    authViewModel.signup(
+                        username.trim(),
+                        email.trim(),
+                        meterNumber.trim(),
+                        password.trim(),
+                        confirmPassword.trim()
+                    )
                 },
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = beeGreen),
+
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = beeGreen
+                ),
+
                 shape = RoundedCornerShape(12.dp)
+
             ) {
-                Text("REGISTER", color = Color.White, fontWeight = FontWeight.Bold)
+
+                Text(
+                    text = "REGISTER",
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TextButton(
+                onClick = {
+                    navController.navigate("login")
+                }
+            ) {
+
+                Text(
+                    text = "Already have an account? Login",
+                    color = beeGreen
+                )
             }
         }
     }
@@ -95,4 +245,3 @@ fun RegisterScreenPreview() {
         rememberNavController()
     )
 }
-
