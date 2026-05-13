@@ -31,9 +31,9 @@ fun DashBoardScreen(navController: NavController) {
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFFF4C430), // Yellow
-                        Color(0xFFD3D3D3), // Light Grey
-                        Color(0xFFADC9A6)  // Black
+                        Color(0xFFF4C430),
+                        Color(0xFFD3D3D3),
+                        Color(0xFFADC9A6)
                     )
                 )
             )
@@ -77,16 +77,13 @@ fun DashBoardScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Balance Card
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp),
-
             colors = CardDefaults.cardColors(
                 containerColor = beeGreen
             ),
-
             shape = RoundedCornerShape(24.dp)
         ) {
 
@@ -94,7 +91,6 @@ fun DashBoardScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(24.dp),
-
                 verticalArrangement = Arrangement.Center
             ) {
 
@@ -120,7 +116,6 @@ fun DashBoardScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Quick Actions
         Text(
             "Quick Actions",
             fontWeight = FontWeight.Bold,
@@ -129,36 +124,64 @@ fun DashBoardScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
+        Column {
 
-            DashboardItem(
-                "Buy",
-                Icons.Default.FlashOn,
-                beeYellow
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
             ) {
 
-                navController.navigate("buytoken")
+                DashboardItem(
+                    "Buy",
+                    Icons.Default.FlashOn,
+                    beeYellow
+                ) {
+                    navController.navigate("buytoken")
+                }
+
+                DashboardItem(
+                    "History",
+                    Icons.Default.History,
+                    Color.LightGray
+                ) {
+                    navController.navigate("history")
+                }
+
+                DashboardItem(
+                    "Profile",
+                    Icons.Default.Person,
+                    Color.LightGray
+                ) {
+                    navController.navigate("profile")
+                }
             }
 
-            DashboardItem(
-                "History",
-                Icons.Default.History,
-                Color.LightGray
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
             ) {
 
-                navController.navigate("history")
-            }
+                DashboardItem(
+                    "Report",
+                    Icons.Default.ReportProblem,
+                    Color.LightGray
+                ) {
+                    navController.navigate("report_issue")
+                }
 
-            DashboardItem(
-                "Profile",
-                Icons.Default.Person,
-                Color.LightGray
-            ) {
+                // ✅ ONLY ADMIN CAN SEE THIS
+                if (UserSession.role == "admin") {
 
-                navController.navigate("profile")
+                    DashboardItem(
+                        "Reports",
+                        Icons.Default.List,
+                        Color.LightGray
+                    ) {
+                        navController.navigate("view_reports")
+                    }
+                }
             }
         }
     }
@@ -178,11 +201,9 @@ fun DashboardItem(
 
         IconButton(
             onClick = onClick,
-
             modifier = Modifier
                 .size(64.dp)
                 .padding(4.dp),
-
             colors = IconButtonDefaults.filledIconButtonColors(
                 containerColor = color.copy(alpha = 0.2f)
             )

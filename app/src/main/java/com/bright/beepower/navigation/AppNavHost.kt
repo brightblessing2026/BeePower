@@ -6,39 +6,24 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.bright.beepower.ui.screens.HistoryScreen
-import com.bright.beepower.ui.screens.NotificationScreen
-
-import com.bright.beepower.ui.screens.auth.LoginScreen
-import com.bright.beepower.ui.screens.auth.RegisterScreen
-
+import com.bright.beepower.data.UserSession
+import com.bright.beepower.ui.screens.*
+import com.bright.beepower.ui.screens.auth.*
 import com.bright.beepower.ui.screens.buytoken.BuyTokenScreen
-
 import com.bright.beepower.ui.screens.dashboard.DashBoardScreen
-
-
-
 import com.bright.beepower.ui.screens.onboarding.OnBoardingScreen
-
 import com.bright.beepower.ui.screens.profile.ProfileScreen
-
-import com.bright.beepower.ui.screens.report.ReportIssueScreen
-import com.bright.beepower.ui.screens.report.ViewReportScreen
-
-
+import com.bright.beepower.ui.screens.report.*
 import com.bright.beepower.ui.screens.splash.SplashScreen
 
 @Composable
 fun AppNavHost(
-
     modifier: Modifier = Modifier,
-
-    navController: NavHostController =
-        rememberNavController(),
-
+    navController: NavHostController = rememberNavController(),
     startDestination: String = ROUT_SPLASH
-
 ) {
+
+    val isAdmin = (UserSession.role ?: "user") == "admin"   // ✅ ADD THIS
 
     NavHost(
         navController = navController,
@@ -86,8 +71,15 @@ fun AppNavHost(
             ReportIssueScreen(navController)
         }
 
+        // 🔒 ADMIN PROTECTED SCREEN
         composable(ROUT_VIEW_REPORTS) {
-            ViewReportScreen(navController)
+
+            if (isAdmin) {
+                ViewReportScreen(navController)
+            } else {
+                // redirect normal users
+                DashBoardScreen(navController)
+            }
         }
     }
 }

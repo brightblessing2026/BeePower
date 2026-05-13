@@ -54,7 +54,6 @@ class AuthViewModel(
                     .setValue(userMap)
                     .addOnSuccessListener {
 
-                        // SESSION UPDATE (FIX)
                         UserSession.uid = uid
                         UserSession.username = username
                         UserSession.email = email
@@ -63,7 +62,10 @@ class AuthViewModel(
                         UserSession.balance = 0
 
                         Toast.makeText(context, "Registered Successfully", Toast.LENGTH_SHORT).show()
-                        navController.navigate("dashboard")
+                        navController.navigate("dashboard") {
+                            popUpTo(0)
+                            launchSingleTop = true
+                        }
                     }
                     .addOnFailureListener {
                         Toast.makeText(context, it.message ?: "Database Error", Toast.LENGTH_SHORT).show()
@@ -102,7 +104,6 @@ class AuthViewModel(
 
                         val role = snapshot.child("role").value?.toString() ?: "user"
 
-                        // SESSION UPDATE (FIX)
                         UserSession.uid = uid
                         UserSession.username = snapshot.child("username").value?.toString()
                         UserSession.email = snapshot.child("email").value?.toString()
@@ -112,10 +113,12 @@ class AuthViewModel(
 
                         Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
 
-                        if (role == "admin") {
-                            navController.navigate("admin_dashboard")
-                        } else {
-                            navController.navigate("dashboard")
+                        // ✅ FIXED NAVIGATION (NO CRASH)
+                        val destination = "dashboard"
+
+                        navController.navigate(destination) {
+                            popUpTo(0)
+                            launchSingleTop = true
                         }
                     }
                     .addOnFailureListener {
@@ -130,6 +133,8 @@ class AuthViewModel(
     fun logout() {
         mAuth.signOut()
         UserSession.clear()
-        navController.navigate("login")
+        navController.navigate("login") {
+            popUpTo(0)
+        }
     }
 }

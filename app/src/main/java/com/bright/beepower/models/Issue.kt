@@ -8,6 +8,8 @@ data class Issue(
 
     var location: String = "",
 
-    var id: String = ""
+    var id: String = "",
+
+    var userId: String = ""   // ✅ ADDED (needed for admin filtering)
 
 )
